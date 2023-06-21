@@ -19,8 +19,9 @@ export default function App({ samples, numOfSteps }: Props) {
   const [isPlaying, setIsPlaying] = useState(false);
 
   // Audio
-  const tracksRef = useRef<Track[]>([]);
-  const stepsRef = useRef<HTMLInputElement[][]>([[]]);
+  const trackRefs = useRef<Track[]>([]);
+  const stepRefs = useRef<HTMLInputElement[][]>([[]]);
+  const lampRefs = useRef<HTMLInputElement[]>([]);
   const seqRef = useRef<Tone.Sequence | null>(null);
 
   // UI
@@ -29,6 +30,7 @@ export default function App({ samples, numOfSteps }: Props) {
 
   // handlers
   const handleStartClick = async () => {
+    console.log(stepRefs);
     if (Tone.Transport.state === 'started') {
       Tone.Transport.stop();
       setIsPlaying(false);
@@ -42,7 +44,7 @@ export default function App({ samples, numOfSteps }: Props) {
 
   // events
   useEffect(() => {
-    tracksRef.current = samples.map((sample, i) => ({
+    trackRefs.current = samples.map((sample, i) => ({
       id: i,
       sampler: new Tone.Sampler({
         urls: {
@@ -53,10 +55,11 @@ export default function App({ samples, numOfSteps }: Props) {
 
     seqRef.current = new Tone.Sequence(
       (time, step) => {
-        tracksRef.current.forEach((track) => {
-          if (stepsRef.current[track.id]?.[step]?.checked) {
+        trackRefs.current.forEach((track) => {
+          if (stepRefs.current[track.id]?.[step]?.checked) {
             track.sampler.triggerAttackRelease(NOTE, '16n', time);
           }
+          lampRefs.current[step].checked = true;
         });
       },
       [...stepIds],
@@ -65,14 +68,34 @@ export default function App({ samples, numOfSteps }: Props) {
 
     return () => {
       seqRef.current?.dispose();
-      tracksRef.current.forEach((track) => track.sampler.dispose());
+      trackRefs.current.forEach((track) => track.sampler.dispose());
     };
   }, [samples, numOfSteps]);
 
   return (
     <div className={styles.container}>
       <div className={styles.grid}>
-        <div className={'celllist'}>
+        <div className={styles.row}>
+          {stepIds.map((stepId) => {
+            return (
+              <label className={styles.lamp} key={stepId}>
+                <input
+                  type="radio"
+                  name="lamp"
+                  id={'lamp' + '-' + stepId}
+                  disabled
+                  className={styles.lamp__input}
+                  ref={(elm) => {
+                    if (!elm) return;
+                    lampRefs.current[stepId] = elm;
+                  }}
+                />
+                <div className={styles.lamp__content} />
+              </label>
+            );
+          })}
+        </div>
+        <div className={styles.cellList}>
           {trackIds.map((trackId) => {
             return (
               <div key={trackId} className={styles.row}>
@@ -86,10 +109,10 @@ export default function App({ samples, numOfSteps }: Props) {
                         className={styles.cell__input}
                         ref={(el) => {
                           if (!el) return;
-                          if (!stepsRef.current[trackId]) {
-                            stepsRef.current[trackId] = [];
+                          if (!stepRefs.current[trackId]) {
+                            stepRefs.current[trackId] = [];
                           }
-                          stepsRef.current[trackId][stepId] = el;
+                          stepRefs.current[trackId][stepId] = el;
                         }}
                       />
                       <div className={styles.cell__content} />
@@ -100,7 +123,6 @@ export default function App({ samples, numOfSteps }: Props) {
             );
           })}
         </div>
-        <div className={styles.row}></div>
       </div>
       <div className={styles.controls}>
         <button onClick={handleStartClick} className={styles.button}>

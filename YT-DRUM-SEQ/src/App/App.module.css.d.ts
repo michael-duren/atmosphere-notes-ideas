@@ -8,6 +8,9 @@ declare const styles: {
   readonly "cell__content": string;
   readonly "controls": string;
   readonly "button": string;
+  readonly "lamp": string;
+  readonly "lamp__content": string;
+  readonly "lamp__input": string;
 };
 export = styles;
 

@@ -5,6 +5,8 @@
 
 .grid {
   display: flex;
+  flex-direction: column;
+  row-gap: 8px;
 }
 
 .row {
@@ -16,7 +18,7 @@
   cursor: pointer;
 }
 
-*:nth-child(4n):not(:last-child) {
+.row > *:nth-child(4n):not(:last-child) {
   margin-right: 8px;
 }
 
@@ -73,4 +75,32 @@
 }
 .button:hover {
   background-color: #4281b2;
+}
+
+.lamp {
+  color: black;
+}
+
+.lamp__content {
+  width: 14px;
+  height: 14px;
+  background-color: #ccc;
+  border-radius: 50%;
+  margin: 0 8px;
+}
+
+.lamp__input {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  position: absolute;
+}
+
+.lamp__input:checked + .lamp__content {
+  background-color: #67e8f9;
 }
