@@ -18,19 +18,29 @@ export default function App({ samples, numOfSteps }: Props) {
   // Playing State
   const [isPlaying, setIsPlaying] = useState(false);
 
+  // Effects state
+  const [delayMix, setDelayMix] = useState(0.2);
+
   // Audio
   const trackRefs = useRef<Track[]>([]);
   const stepRefs = useRef<HTMLInputElement[][]>([[]]);
   const lampRefs = useRef<HTMLInputElement[]>([]);
   const seqRef = useRef<Tone.Sequence | null>(null);
 
+  const distortion = new Tone.Distortion(0.4).toDestination();
+  const feedbackDelay = new Tone.FeedbackDelay(0.125, 0.5).toDestination();
+
   // UI
-  const trackIds = [...Array(samples.length).keys()] as const;
+  // const trackIds = [...Array(samples.length).keys()] as const;
+  const trackIds = samples.map((sample, i) => {
+    return { id: i, name: sample.name };
+  });
+  console.log(trackIds);
   const stepIds = [...Array(numOfSteps).keys()] as const;
 
   // handlers
   const handleStartClick = async () => {
-    console.log(stepRefs);
+    console.log(stepRefs.current);
     if (Tone.Transport.state === 'started') {
       Tone.Transport.stop();
       setIsPlaying(false);
@@ -50,7 +60,9 @@ export default function App({ samples, numOfSteps }: Props) {
         urls: {
           [NOTE]: sample.url,
         },
-      }).toDestination(),
+      })
+        .connect(feedbackDelay)
+        .connect(distortion),
     }));
 
     seqRef.current = new Tone.Sequence(
@@ -98,7 +110,7 @@ export default function App({ samples, numOfSteps }: Props) {
         <div className={styles.cellList}>
           {trackIds.map((trackId) => {
             return (
-              <div key={trackId} className={styles.row}>
+              <div key={trackId.id} className={styles.row}>
                 {stepIds.map((stepId) => {
                   const id = trackId + '-' + stepId;
                   return (
@@ -109,10 +121,10 @@ export default function App({ samples, numOfSteps }: Props) {
                         className={styles.cell__input}
                         ref={(el) => {
                           if (!el) return;
-                          if (!stepRefs.current[trackId]) {
-                            stepRefs.current[trackId] = [];
+                          if (!stepRefs.current[trackId.id]) {
+                            stepRefs.current[trackId.id] = [];
                           }
-                          stepRefs.current[trackId][stepId] = el;
+                          stepRefs.current[trackId.id][stepId] = el;
                         }}
                       />
                       <div className={styles.cell__content} />

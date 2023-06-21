@@ -11,7 +11,11 @@
 }
 
 body {
-  display: grid;
-  place-content: center;
   min-height: 100vh;
+  display: flex;
+  /* background-image: url('/assets/img/pexels-adnan-uddin-886051.jpg'); */
+  /* background: center / contain no-repeat
+    url('/assets/img/pexels-lukas-hartmann-880675.jpg'); */
+  background: url('/assets/img/space.jpg');
+  background-size: cover;
 }
