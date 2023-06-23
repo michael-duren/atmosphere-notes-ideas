@@ -1,10 +1,12 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import kitReducer from './pattern/pattern';
+import patternReducer from './slices/pattern';
+import transportReducer from './slices/transport';
 import logger from 'redux-logger';
 
 export const store = configureStore({
   reducer: {
-    kit: kitReducer,
+    pattern: patternReducer,
+    transport: transportReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });

@@ -13,4 +13,17 @@ body {
   .bg-gray-transparent {
     @apply bg-gray-700 bg-opacity-30;
   }
+  .bg-dark-transparent {
+    @apply bg-black bg-opacity-30;
+  }
+}
+
+.glow-gradient {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 255, 255, 0.6) 0%,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4dffffff', endColorstr='#00ffffff',GradientType=1 );
 }

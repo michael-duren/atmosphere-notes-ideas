@@ -1,10 +1,11 @@
 import { Fragment, useEffect, useRef, useState } from 'react';
-import Track from '../../Ui/Tracks/Tracks';
+import Track from '../../Ui/Track/Track';
 import { useAppSelector } from '../../../store/hooks';
-import { KitState } from '../../../store/pattern/pattern';
-import { selectPattern } from '../../../store/pattern/pattern';
+import { KitState } from '../../../store/slices/pattern';
+import { selectPattern } from '../../../store/slices/pattern';
 import * as Tone from 'tone';
 import { Drum } from '../../../models/kit';
+import { current } from '@reduxjs/toolkit';
 
 interface SequencerProps {
   steps: number;
@@ -22,6 +23,7 @@ export default function Sequencer({ steps }: SequencerProps) {
     (track) => tracks[track as keyof KitState]
   );
   const trackRef = useRef<Drum[]>([]);
+  const lampRef = useRef<HTMLInputElement[]>([]);
   const seqRef = useRef<Tone.Sequence | null>(null);
   const stepsRef = useRef<HTMLInputElement[][]>([]);
   const stepsIds = Array.from({ length: 16 }).map((_, i) => i);
@@ -53,15 +55,14 @@ export default function Sequencer({ steps }: SequencerProps) {
         }).toDestination(),
       };
     });
-    console.log(trackRef.current);
 
     seqRef.current = new Tone.Sequence(
       (time, step) => {
         trackRef.current.forEach((track) => {
           if (stepsRef.current[track.id][step].checked) {
-            console.log('TRIGGERED');
             track.sampler?.triggerAttack(NOTE, time);
           }
+          lampRef.current[step].checked = true;
         });
       },
       [...stepsIds],
@@ -77,10 +78,36 @@ export default function Sequencer({ steps }: SequencerProps) {
   }, [steps]);
 
   return (
-    <div className="flex flex-col w-[60rem] bg-black p-4 bg-opacity-30  gap-4 justify-center">
-      <button onClick={handleTransport}>{isPlaying ? 'PAUSE' : 'START'}</button>
+    <div className="flex min-w-[60vw] flex-col rounded-2xl p-8  bg-dark-transparent  gap-4 justify-center">
       <h2 className="font-caps text-3xl">SEQUENCER</h2>
-      <div className="grid grid-rows-4 gap-4">
+      <div className="grid grid-rows-4 gap-5">
+        <div className="flex gap-x-4">
+          <div className="w-10"></div>
+          {stepsIds.map((step, i) => {
+            const isDivisibleByFour = (step + 1) % 4 === 0 || step + 1 === 16;
+            return (
+              <label
+                className={`flex max-w-[2.5rem]  w-10 h-10 items-center ${
+                  isDivisibleByFour && 'mr-4'
+                } justify-center`}
+                key={step}
+              >
+                <input
+                  type="radio"
+                  name="lamp"
+                  id={`lamp-${step}`}
+                  disabled
+                  ref={(elm) => {
+                    if (!elm) return;
+                    lampRef.current[step] = elm;
+                  }}
+                  className={`whitespace-nowrap peer p-0 m-[-1px] h-[1px] w-[1px] absolute `}
+                />
+                <div className="w-6 my-0 mx-2 peer-checked:bg-blue-500  h-6 bg-gray-transparent peer-checked:bg-opacity-70  rounded-full"></div>
+              </label>
+            );
+          })}
+        </div>
         {patternArr.map((instrument, index) => {
           return (
             <Fragment key={index}>

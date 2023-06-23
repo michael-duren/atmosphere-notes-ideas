@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { Drum } from '../../../models/kit';
-import { toggleStep } from '../../../store/pattern/pattern';
+import { toggleStep } from '../../../store/slices/pattern';
 
 interface TrackProps {
   instrument: Drum;
@@ -15,13 +15,15 @@ export default function Track({ instrument, index, stepsRef }: TrackProps) {
   return (
     <div className="flex gap-4 items-center">
       <div className="w-10">{instrument.name}</div>
-      <div key={index} className="flex gap-4">
+      <div key={index} className="flex gap-x-4">
         {Array.from({ length: 16 }, (_, index) => {
           const isDivisibleByFour = (index + 1) % 4 === 0;
           const id = `${instrument.id}-${index}`;
           return (
             <label
-              className={`relative ${isDivisibleByFour && 'mr-4'} `}
+              className={`relative max-w-[2.5rem] ${
+                isDivisibleByFour && 'mr-4'
+              } `}
               key={index}
             >
               <input
@@ -43,7 +45,7 @@ export default function Track({ instrument, index, stepsRef }: TrackProps) {
               <div
                 className="peer-hover:bg-opacity-60 rounded-md  0 hover:bg-opacity-90 bg-gray-transparent
                 peer-checked:peer-hover:bg-opacity-100
-                       peer-checked:bg-red-500 peer-checked:bg-opacity-70 w-10 h-10"
+                       peer-checked:bg-blue-500 peer-checked:bg-opacity-70 w-10 h-10"
               />
             </label>
           );

@@ -48,7 +48,7 @@ const patternInitialState: KitState = {
   },
 };
 
-const kitSlice = createSlice({
+const patternSlice = createSlice({
   name: 'kit',
   initialState: patternInitialState,
   reducers: {
@@ -61,8 +61,8 @@ const kitSlice = createSlice({
   },
 });
 
-export const { toggleStep } = kitSlice.actions;
+export const { toggleStep } = patternSlice.actions;
 
-export const selectPattern = (state: RootState): KitState => state.kit;
+export const selectPattern = (state: RootState): KitState => state.pattern;
 
-export default kitSlice.reducer;
+export default patternSlice.reducer;

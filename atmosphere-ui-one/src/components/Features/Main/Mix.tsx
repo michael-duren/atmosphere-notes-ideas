@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import EffectCard from '../../Ui/Cards/EffectCard';
 
-export default function Effects() {
+export default function Mix() {
   const initialStateDistortion = {
     mix: 0,
     amount: 0,
@@ -42,9 +42,9 @@ export default function Effects() {
   };
 
   return (
-    <div className=" w-[60rem] flex flex-col">
-      <h2 className="uppercase font-caps text-3xl">EFFECTS</h2>
-      <div className="flex p-8 items-center justify-between">
+    <div className="p-8 min-w-[60vw] bg-dark-transparent flex flex-col">
+      <h2 className="uppercase font-caps text-3xl">MIX</h2>
+      <div className="flex p-8 gap-x-8 items-center justify-between">
         <EffectCard
           state={[
             { level: distortion.mix, name: 'mix' },
