@@ -8,7 +8,7 @@ export default function Main() {
       <Header />
       <div className="flex  p-4 items-center flex-col">
         <Effects />
-        <Sequencer />
+        <Sequencer steps={16} />
       </div>
     </div>
   );

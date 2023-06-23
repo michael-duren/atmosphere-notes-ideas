@@ -5,6 +5,7 @@ export interface DrumState {
   steps: boolean[];
   name: string;
   sound: string;
+  id: number;
 }
 
 export interface PatternAction {
@@ -25,21 +26,24 @@ const patternInitialState: KitState = {
     steps: Array.from({ length: 16 }).map((val) => (val = false)),
     name: 'CH',
     sound: '/sounds/closed-hat.wav',
+    id: 0,
   },
   CL: {
     steps: Array.from({ length: 16 }).map((val) => (val = false)),
     name: 'CL',
     sound: '/sounds/clap.wav',
+    id: 1,
   },
   SD: {
     steps: Array.from({ length: 16 }).map((val) => (val = false)),
     name: 'SD',
     sound: '/sounds/snare.wav',
+    id: 2,
   },
   BD: {
     steps: Array.from({ length: 16 }).map((val) => (val = false)),
     name: 'BD',
-
+    id: 3,
     sound: '/sounds/vocal-kick.wav',
   },
 };
