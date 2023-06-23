@@ -1,10 +1,15 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 
 export interface DrumState {
   steps: boolean[];
   name: string;
   sound: string;
+}
+
+export interface PatternAction {
+  name: string;
+  step: number;
 }
 
 export interface KitState {
@@ -25,14 +30,18 @@ const kitSlice = createSlice({
   name: 'kit',
   initialState: patternInitialState,
   reducers: {
-    toggleBDStep: (state, action) => {
-      state.BD.steps[action.payload] = !state.BD.steps[action.payload];
+    toggleStep: (state, action: PayloadAction<PatternAction>) => {
+      state[action.payload.name as keyof KitState].steps[action.payload.step] =
+        !state[action.payload.name as keyof KitState].steps[
+          action.payload.step
+        ];
+
       console.log(state.BD.steps);
     },
   },
 });
 
-export const { toggleBDStep } = kitSlice.actions;
+export const { toggleStep } = kitSlice.actions;
 
 export const selectPattern = (state: RootState): KitState => state.kit;
 
