@@ -19,6 +19,7 @@ const transportSlice = createSlice({
 
 export const { togglePlay } = transportSlice.actions;
 
-export const isPlaying = (state: RootState): TransportState => state.transport;
+export const selectTransport = (state: RootState): TransportState =>
+  state.transport;
 
 export default transportSlice.reducer;

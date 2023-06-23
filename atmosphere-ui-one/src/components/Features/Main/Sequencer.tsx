@@ -1,11 +1,11 @@
 import { Fragment, useEffect, useRef, useState } from 'react';
 import Track from '../../Ui/Track/Track';
-import { useAppSelector } from '../../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { KitState } from '../../../store/slices/pattern';
 import { selectPattern } from '../../../store/slices/pattern';
 import * as Tone from 'tone';
 import { Drum } from '../../../models/kit';
-import { current } from '@reduxjs/toolkit';
+import { selectTransport, togglePlay } from '../../../store/slices/transport';
 
 interface SequencerProps {
   steps: number;
@@ -15,6 +15,13 @@ const NOTE = 'C2' as const;
 
 export default function Sequencer({ steps }: SequencerProps) {
   const pattern = useAppSelector(selectPattern);
+  const transportState = useAppSelector(selectTransport);
+  const dispatch = useAppDispatch();
+
+  const setIsPlaying = (isPlaying: boolean) => {
+    dispatch(togglePlay);
+  };
+
   const patternArr = Object.keys(pattern).map(
     (key) => pattern[key as keyof KitState]
   );
@@ -27,8 +34,6 @@ export default function Sequencer({ steps }: SequencerProps) {
   const seqRef = useRef<Tone.Sequence | null>(null);
   const stepsRef = useRef<HTMLInputElement[][]>([]);
   const stepsIds = Array.from({ length: 16 }).map((_, i) => i);
-
-  const [isPlaying, setIsPlaying] = useState(false);
 
   // handlers
   const handleTransport = async () => {
