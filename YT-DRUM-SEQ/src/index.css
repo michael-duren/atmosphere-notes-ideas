@@ -19,3 +19,7 @@ body {
   background: url('/assets/img/space.jpg');
   background-size: cover;
 }
+
+.bg-trans {
+  background-color: rgb(0 0 0 / 0.9);
+}
