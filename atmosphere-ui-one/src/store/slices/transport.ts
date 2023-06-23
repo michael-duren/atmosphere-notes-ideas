@@ -11,8 +11,8 @@ const transportSlice = createSlice({
   name: 'transport',
   initialState: transportInitialState,
   reducers: {
-    togglePlay: (state) => {
-      state.isPlaying = !state.isPlaying;
+    togglePlay: (state, action) => {
+      state.isPlaying = action.payload;
     },
   },
 });

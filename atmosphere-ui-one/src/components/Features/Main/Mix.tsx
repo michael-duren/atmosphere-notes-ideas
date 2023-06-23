@@ -42,9 +42,9 @@ export default function Mix() {
   };
 
   return (
-    <div className="p-8 min-w-[60vw] bg-dark-transparent flex flex-col">
+    <div className="p-8 min-w-[60vw] bg-dark-transparent items-end flex flex-col">
       <h2 className="uppercase font-caps text-3xl">MIX</h2>
-      <div className="flex p-8 gap-x-8 items-center justify-between">
+      <div className="flex w-full p-8 gap-x-8 items-center justify-between">
         <EffectCard
           state={[
             { level: distortion.mix, name: 'mix' },

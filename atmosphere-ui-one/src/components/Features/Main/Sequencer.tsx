@@ -1,11 +1,11 @@
-import { Fragment, useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef } from 'react';
 import Track from '../../Ui/Track/Track';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { useAppSelector } from '../../../store/hooks';
 import { KitState } from '../../../store/slices/pattern';
 import { selectPattern } from '../../../store/slices/pattern';
 import * as Tone from 'tone';
 import { Drum } from '../../../models/kit';
-import { selectTransport, togglePlay } from '../../../store/slices/transport';
+import Transport from './Transport';
 
 interface SequencerProps {
   steps: number;
@@ -15,12 +15,6 @@ const NOTE = 'C2' as const;
 
 export default function Sequencer({ steps }: SequencerProps) {
   const pattern = useAppSelector(selectPattern);
-  const transportState = useAppSelector(selectTransport);
-  const dispatch = useAppDispatch();
-
-  const setIsPlaying = (isPlaying: boolean) => {
-    dispatch(togglePlay);
-  };
 
   const patternArr = Object.keys(pattern).map(
     (key) => pattern[key as keyof KitState]
@@ -36,17 +30,6 @@ export default function Sequencer({ steps }: SequencerProps) {
   const stepsIds = Array.from({ length: 16 }).map((_, i) => i);
 
   // handlers
-  const handleTransport = async () => {
-    console.log('handleTransport');
-    if (Tone.Transport.state === 'started') {
-      Tone.Transport.stop();
-      setIsPlaying(false);
-    } else {
-      await Tone.start();
-      Tone.Transport.start();
-      setIsPlaying(true);
-    }
-  };
 
   useEffect(() => {
     trackRef.current = trackArr.map((track, i) => {
@@ -84,7 +67,10 @@ export default function Sequencer({ steps }: SequencerProps) {
 
   return (
     <div className="flex min-w-[60vw] flex-col rounded-2xl p-8  bg-dark-transparent  gap-4 justify-center">
-      <h2 className="font-caps text-3xl">SEQUENCER</h2>
+      <div className="flex justify-between">
+        <Transport />
+        <h2 className="font-caps text-3xl">SEQUENCER</h2>
+      </div>
       <div className="grid grid-rows-4 gap-5">
         <div className="flex gap-x-4">
           <div className="w-10"></div>
