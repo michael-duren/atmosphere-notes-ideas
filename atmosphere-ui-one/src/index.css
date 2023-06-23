@@ -8,3 +8,9 @@ body {
   background-size: cover;
   min-height: 100vh;
 }
+
+@layer components {
+  .bg-gray-transparent {
+    @apply bg-gray-700 bg-opacity-30;
+  }
+}

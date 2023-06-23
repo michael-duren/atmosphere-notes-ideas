@@ -18,7 +18,7 @@ export default function Sequencer() {
                         type="checkbox"
                       />
                       <div
-                        className="peer-hover:bg-opacity-60 rounded-md  bg-gray-400 bg-opacity-30 hover:bg-opacity-90
+                        className="peer-hover:bg-opacity-60 rounded-md  0 hover:bg-opacity-90 bg-gray-transparent
                        peer-checked:bg-red-500 w-10 h-10"
                       />
                     </label>
