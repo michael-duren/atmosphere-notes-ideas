@@ -6,6 +6,7 @@ import { selectPattern } from '../../../store/slices/pattern';
 import * as Tone from 'tone';
 import { Drum } from '../../../models/kit';
 import Transport from './Transport';
+import { GiAbstract016 } from 'react-icons/gi';
 
 interface SequencerProps {
   steps: number;
@@ -69,7 +70,12 @@ export default function Sequencer({ steps }: SequencerProps) {
     <div className="flex min-w-[60vw] flex-col rounded-2xl p-8  bg-dark-transparent  gap-4 justify-center">
       <div className="flex justify-between">
         <Transport />
-        <h2 className="font-caps text-3xl">SEQUENCER</h2>
+        <h2 className="font-caps flex gap-4 items-center text-2xl">
+          SEQUENCER{' '}
+          <span>
+            <GiAbstract016 />
+          </span>
+        </h2>
       </div>
       <div className="grid grid-rows-4 gap-5">
         <div className="flex gap-x-4">

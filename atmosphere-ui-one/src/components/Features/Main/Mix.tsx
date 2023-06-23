@@ -1,5 +1,12 @@
 import { useState } from 'react';
 import EffectCard from '../../Ui/Cards/EffectCard';
+import {
+  GiAbstract051,
+  GiAbstract053,
+  GiAbstract013,
+  GiAbstract098,
+  GiAbstract024,
+} from 'react-icons/gi';
 
 export default function Mix() {
   const initialStateDistortion = {
@@ -43,7 +50,12 @@ export default function Mix() {
 
   return (
     <div className="p-8 min-w-[60vw] bg-dark-transparent items-end flex flex-col">
-      <h2 className="uppercase font-caps text-3xl">MIX</h2>
+      <h2 className="uppercase flex gap-4 items-center font-caps text-2xl">
+        MIX{' '}
+        <span>
+          <GiAbstract051 />
+        </span>
+      </h2>
       <div className="flex w-full p-8 gap-x-8 items-center justify-between">
         <EffectCard
           state={[
@@ -54,6 +66,7 @@ export default function Mix() {
           handleMixChange={handleDistortionChange}
           color="accent-red-500"
           title="Distortion"
+          EffectIcon={GiAbstract098}
         />
         <EffectCard
           state={[
@@ -64,6 +77,7 @@ export default function Mix() {
           handleMixChange={handleVerbChange}
           color="accent-green-500"
           title="Reverb"
+          EffectIcon={GiAbstract024}
         />
         <EffectCard
           state={[
@@ -74,6 +88,8 @@ export default function Mix() {
           handleMixChange={handleDelayChange}
           color="accent-blue-500"
           title="Delay"
+          EffectIcon={GiAbstract053}
+          size={'text-xl'}
         />
       </div>
     </div>
