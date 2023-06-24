@@ -6,6 +6,9 @@ export default {
       backgroundImage: {
         'black-texture': "url('/assets/img/black-texture.jpg')",
       },
+      rotate: {
+        270: '270deg',
+      },
       fontFamily: {
         title: ['Megrim', 'cursive'],
         caps: ['Rajdhani', 'sans-serif'],

@@ -7,6 +7,8 @@ import {
   GiAbstract098,
   GiAbstract024,
 } from 'react-icons/gi';
+import { Volume } from 'tone';
+import VolumeCard from '../../Ui/Cards/VolumeCard';
 
 export default function Mix() {
   const initialStateDistortion = {
@@ -91,6 +93,7 @@ export default function Mix() {
           EffectIcon={GiAbstract053}
           size={'text-xl'}
         />
+        <VolumeCard />
       </div>
     </div>
   );
