@@ -7,7 +7,12 @@ import * as Tone from 'tone';
 import { Drum } from '../../../models/kit';
 import Transport from './Transport';
 import { GiAbstract016 } from 'react-icons/gi';
-import { distortion, distortionGain } from '../../../store/tone/mix';
+import {
+  delay,
+  distortion,
+  distortionGain,
+  reverb,
+} from '../../../store/tone/mix';
 
 interface SequencerProps {
   steps: number;
@@ -39,7 +44,7 @@ export default function Sequencer({ steps }: SequencerProps) {
           urls: {
             [NOTE]: track.sound,
           },
-        }).chain(distortion, distortionGain, Tone.Destination),
+        }).chain(distortion, distortionGain, reverb, delay, Tone.Destination),
       };
     });
 
@@ -78,7 +83,7 @@ export default function Sequencer({ steps }: SequencerProps) {
       <div className="grid grid-rows-4 gap-5">
         <div className="flex gap-x-4">
           <div className="w-10"></div>
-          {stepsIds.map((step, i) => {
+          {stepsIds.map((step) => {
             const isDivisibleByFour = (step + 1) % 4 === 0 || step + 1 === 16;
             return (
               <label

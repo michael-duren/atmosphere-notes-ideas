@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
-import { distortion } from '../tone/mix';
 
 export interface MixState {
   distortion: { mix: number; distortion: number; output: number };
@@ -27,13 +26,6 @@ const mixInitialState = {
   },
 };
 
-// export const changeDistortionMix = createAsyncThunk(
-//   'mix/changeDistortionMix',
-//   async (value: number) => {
-//     return value;
-//   }
-// );
-
 const mixSlice = createSlice({
   name: 'mix',
   initialState: mixInitialState,
@@ -57,6 +49,15 @@ const mixSlice = createSlice({
     setReverbPreDelay: (state, action) => {
       state.reverb.preDelay = action.payload;
     },
+    setDelayMix: (state, action) => {
+      state.delay.mix = action.payload;
+    },
+    setDelayDelayTime: (state, action) => {
+      state.delay.delayTime = action.payload;
+    },
+    setDelayFeedback: (state, action) => {
+      state.delay.feedback = action.payload;
+    },
   },
 });
 
@@ -69,6 +70,9 @@ export const {
   setReverbMix,
   setReverbDecay,
   setReverbPreDelay,
+  setDelayMix,
+  setDelayDelayTime,
+  setDelayFeedback,
 } = mixSlice.actions;
 
 export default mixSlice.reducer;

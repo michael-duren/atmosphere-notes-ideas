@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import EffectCard from '../../Ui/Cards/EffectCard';
 import {
   GiAbstract051,
@@ -7,22 +7,32 @@ import {
   GiAbstract024,
 } from 'react-icons/gi';
 import VolumeCard from '../../Ui/Cards/VolumeCard';
-import { useAppSelector } from '../../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
   selectMix,
+  setDelayDelayTime,
+  setDelayFeedback,
+  setDelayMix,
   setDistortionDistortion,
   setDistortionMix,
   setDistortionOutput,
+  setReverbDecay,
   setReverbMix,
+  setReverbPreDelay,
 } from '../../../store/slices/mix';
-import { useDispatch } from 'react-redux';
-import { distortion, distortionGain, reverb } from '../../../store/tone/mix';
+import {
+  distortion,
+  distortionGain,
+  reverb,
+  delay,
+} from '../../../store/tone/mix';
 
 export default function Mix() {
   const mix = useAppSelector(selectMix);
   const distortionStore = mix.distortion;
   const reverbStore = mix.reverb;
-  const dispatch = useDispatch();
+  const delayStore = mix.delay;
+  const dispatch = useAppDispatch();
 
   // DISTORTION
   useEffect(() => {
@@ -38,25 +48,26 @@ export default function Mix() {
   // REVERB
   useEffect(() => {
     reverb.wet.value = reverbStore.mix;
-  }, []);
+  }, [reverbStore.mix]);
+  useEffect(() => {
+    reverb.decay = reverbStore.decay;
+  }, [reverbStore.decay]);
+  useEffect(() => {
+    reverb.preDelay = reverbStore.preDelay;
+  }, [reverbStore.preDelay]);
 
-  const initialStateDelay = {
-    mix: 0,
-    time: 0,
-    feedback: 0,
-  };
+  // DELAY
+  useEffect(() => {
+    delay.wet.value = delayStore.mix;
+  }, [delayStore.mix]);
+  useEffect(() => {
+    delay.delayTime.value = delayStore.delayTime;
+  }, [delayStore.delayTime]);
+  useEffect(() => {
+    delay.feedback.value = delayStore.feedback;
+  }, [delayStore.feedback]);
 
-  // const [distortion, setDistortion] = useState(initialStateDistortion);
-  // const [verb, setVerb] = useState(initialStateVerb);
-  const [delay, setDelay] = useState(initialStateDelay);
-
-  // const handleDistortionChange = (
-  //   event: React.ChangeEvent<HTMLInputElement>
-  // ) => {
-  //   const { value, name } = event.target;
-  //   setDistortion({ ...distortion, [name]: value });
-  // };
-
+  // DISTORTION HANDLERS
   const handleDistortionMixChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -78,21 +89,42 @@ export default function Mix() {
     dispatch(setDistortionOutput(parseFloat(value)));
   };
 
+  // REVERB HANDLERS
   const handleReverbMixChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const { value } = event.target;
     dispatch(setReverbMix(parseFloat(value)));
   };
+  const handleReverbDecayChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const { value } = event.target;
+    dispatch(setReverbDecay(parseFloat(value)));
+  };
+  const handleReverbPreDelayyChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const { value } = event.target;
+    dispatch(setReverbPreDelay(parseFloat(value)));
+  };
 
-  // const handleVerbChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { value, name } = event.target;
-  //   setVerb({ ...verb, [name]: value });
-  // };
-
-  const handleDelayChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, name } = event.target;
-    setDelay({ ...delay, [name]: value });
+  // DELAY HANDLERS
+  const handleDelayMixChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    dispatch(setDelayMix(parseFloat(value)));
+  };
+  const handleDelayDelayTimeChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const { value } = event.target;
+    dispatch(setDelayDelayTime(parseFloat(value)));
+  };
+  const handleDelayFeedbackChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const { value } = event.target;
+    dispatch(setDelayFeedback(parseFloat(value)));
   };
 
   return (
@@ -126,29 +158,51 @@ export default function Mix() {
           title="Distortion"
           EffectIcon={GiAbstract098}
         />
-        {/* <EffectCard
+        <EffectCard
           state={[
-            { level: reverbStore.mix, name: 'mix' },
-            { level: reverbStore.decay, name: 'decay' },
-            { level: reverbStore.preDelay, name: 'preDelay' },
+            {
+              level: reverbStore.mix,
+              name: 'mix',
+              setter: handleReverbMixChange,
+            },
+            {
+              level: reverbStore.decay,
+              name: 'decay',
+              setter: handleReverbDecayChange,
+            },
+            {
+              level: reverbStore.preDelay,
+              name: 'preDelay',
+              setter: handleReverbPreDelayyChange,
+            },
           ]}
-          handleMixChange={handleReverbMixChange}
           color="accent-green-500"
           title="Reverb"
           EffectIcon={GiAbstract024}
-        /> */}
-        {/* <EffectCard
+        />
+        <EffectCard
           state={[
-            { level: delay.mix, name: 'mix' },
-            { level: delay.time, name: 'time' },
-            { level: delay.feedback, name: 'feedback' },
+            {
+              level: delayStore.mix,
+              name: 'mix',
+              setter: handleDelayMixChange,
+            },
+            {
+              level: delayStore.delayTime,
+              name: 'time',
+              setter: handleDelayDelayTimeChange,
+            },
+            {
+              level: delayStore.feedback,
+              name: 'feedback',
+              setter: handleDelayFeedbackChange,
+            },
           ]}
-          handleMixChange={handleDelayChange}
           color="accent-blue-500"
           title="Delay"
           EffectIcon={GiAbstract053}
           size={'text-xl'}
-        /> */}
+        />
         <VolumeCard />
       </div>
     </div>
