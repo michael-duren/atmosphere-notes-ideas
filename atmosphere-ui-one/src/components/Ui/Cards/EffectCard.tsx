@@ -5,11 +5,11 @@ import Slider from '../Slider';
 interface Parameter {
   level: number;
   name: string;
+  setter: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 interface Props {
   state: Parameter[];
-  handleMixChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   color: 'accent-red-500' | 'accent-blue-500' | 'accent-green-500';
   title: string;
   EffectIcon?: React.FC;
@@ -18,7 +18,6 @@ interface Props {
 
 export default function EffectCard({
   state,
-  handleMixChange,
   color,
   size = 'text-2xl',
   EffectIcon,
@@ -41,7 +40,7 @@ export default function EffectCard({
           </label>
           <Slider
             value={paramOne.level}
-            onChange={handleMixChange}
+            onChange={paramOne.setter}
             name={paramOne.name}
             color={color}
           />
@@ -52,7 +51,7 @@ export default function EffectCard({
           </label>
           <Slider
             value={paramTwo.level}
-            onChange={handleMixChange}
+            onChange={paramTwo.setter}
             name={paramTwo.name}
             color={color}
           />
@@ -63,7 +62,7 @@ export default function EffectCard({
           </label>
           <Slider
             value={paramThree.level}
-            onChange={handleMixChange}
+            onChange={paramThree.setter}
             name={paramThree.name}
             color={color}
           />

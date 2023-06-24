@@ -7,6 +7,7 @@ import * as Tone from 'tone';
 import { Drum } from '../../../models/kit';
 import Transport from './Transport';
 import { GiAbstract016 } from 'react-icons/gi';
+import { distortion, distortionGain } from '../../../store/tone/mix';
 
 interface SequencerProps {
   steps: number;
@@ -15,25 +16,22 @@ interface SequencerProps {
 const NOTE = 'C2' as const;
 
 export default function Sequencer({ steps }: SequencerProps) {
+  // REDUX STATE SELECTORS
   const pattern = useAppSelector(selectPattern);
-
   const patternArr = Object.keys(pattern).map(
-    (key) => pattern[key as keyof KitState]
+    (track) => pattern[track as keyof KitState]
   );
-  const tracks = useAppSelector(selectPattern);
-  const trackArr = Object.keys(tracks).map(
-    (track) => tracks[track as keyof KitState]
-  );
+
+  // REFS
   const trackRef = useRef<Drum[]>([]);
   const lampRef = useRef<HTMLInputElement[]>([]);
   const seqRef = useRef<Tone.Sequence | null>(null);
   const stepsRef = useRef<HTMLInputElement[][]>([]);
   const stepsIds = Array.from({ length: 16 }).map((_, i) => i);
 
-  // handlers
-
+  // EVENTS
   useEffect(() => {
-    trackRef.current = trackArr.map((track, i) => {
+    trackRef.current = patternArr.map((track, i) => {
       return {
         ...track,
         id: i,
@@ -41,7 +39,7 @@ export default function Sequencer({ steps }: SequencerProps) {
           urls: {
             [NOTE]: track.sound,
           },
-        }).toDestination(),
+        }).chain(distortion, distortionGain, Tone.Destination),
       };
     });
 
@@ -67,7 +65,7 @@ export default function Sequencer({ steps }: SequencerProps) {
   }, [steps]);
 
   return (
-    <div className="flex min-w-[60vw] flex-col rounded-2xl p-8  bg-dark-transparent  gap-4 justify-center">
+    <div className="flex max-w-[60rem] min-w-[60vw] flex-col rounded-2xl p-8  bg-dark-transparent  gap-4 justify-center">
       <div className="flex justify-between">
         <Transport />
         <h2 className="font-caps flex gap-4 items-center text-2xl">
