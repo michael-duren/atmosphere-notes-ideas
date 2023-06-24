@@ -22,9 +22,9 @@ const Slider = ({
     <input
       type="range"
       name={name}
-      min="0"
+      min={0}
       step={0.01}
-      max={0.99}
+      max={1}
       value={value}
       onChange={onChange}
       className={`w-20 h-0.5 ${color} bg-gray-300 ${additionalClasses} bg-opacity-30 appearance-none cursor-pointer rounded-lg`}

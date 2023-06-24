@@ -12,7 +12,9 @@ import {
   distortion,
   distortionGain,
   reverb,
+  volume,
 } from '../../../store/tone/mix';
+import { selectMix } from '../../../store/slices/mix';
 
 interface SequencerProps {
   steps: number;
@@ -22,6 +24,7 @@ const NOTE = 'C2' as const;
 
 export default function Sequencer({ steps }: SequencerProps) {
   // REDUX STATE SELECTORS
+  const { masterVolume } = useAppSelector(selectMix);
   const pattern = useAppSelector(selectPattern);
   const patternArr = Object.keys(pattern).map(
     (track) => pattern[track as keyof KitState]
@@ -36,6 +39,10 @@ export default function Sequencer({ steps }: SequencerProps) {
 
   // EVENTS
   useEffect(() => {
+    volume.volume.value = Tone.gainToDb(masterVolume);
+  }, [masterVolume]);
+
+  useEffect(() => {
     trackRef.current = patternArr.map((track, i) => {
       return {
         ...track,
@@ -44,7 +51,14 @@ export default function Sequencer({ steps }: SequencerProps) {
           urls: {
             [NOTE]: track.sound,
           },
-        }).chain(distortion, distortionGain, reverb, delay, Tone.Destination),
+        }).chain(
+          distortion,
+          distortionGain,
+          reverb,
+          delay,
+          volume,
+          Tone.Destination
+        ),
       };
     });
 

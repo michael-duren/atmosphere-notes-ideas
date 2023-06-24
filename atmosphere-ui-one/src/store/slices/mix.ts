@@ -5,9 +5,11 @@ export interface MixState {
   distortion: { mix: number; distortion: number; output: number };
   reverb: { mix: number; decay: number; preDelay: number };
   delay: { mix: number; delayTime: number; maxDelay: number; feedback: number };
+  masterVolume: number;
 }
 
 const mixInitialState = {
+  masterVolume: 1,
   distortion: {
     distortion: 0.8,
     mix: 0,
@@ -30,6 +32,9 @@ const mixSlice = createSlice({
   name: 'mix',
   initialState: mixInitialState,
   reducers: {
+    setMasterVolume: (state, action) => {
+      state.masterVolume = action.payload;
+    },
     setDistortionMix: (state, action) => {
       state.distortion.mix = action.payload;
     },
@@ -64,6 +69,7 @@ const mixSlice = createSlice({
 export const selectMix = (state: RootState): MixState => state.mix;
 
 export const {
+  setMasterVolume,
   setDistortionMix,
   setDistortionDistortion,
   setDistortionOutput,

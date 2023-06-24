@@ -7,4 +7,6 @@ const reverb = new Tone.Reverb(0.5);
 
 const delay = new Tone.FeedbackDelay(0.5);
 
-export { distortion, distortionGain, reverb, delay };
+const volume = new Tone.Volume(Tone.dbToGain(1));
+
+export { distortion, distortionGain, reverb, delay, volume };

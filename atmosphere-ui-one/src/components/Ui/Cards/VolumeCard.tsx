@@ -1,16 +1,23 @@
-import { useState } from 'react';
+import * as Tone from 'tone';
+import { useEffect } from 'react';
 import Slider from '../Slider';
 import { GiAbstract013 } from 'react-icons/gi';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { selectMix, setMasterVolume } from '../../../store/slices/mix';
 
 export default function VolumeCard() {
-  const [masterVolume, setMasterVolume] = useState(100);
+  const { masterVolume } = useAppSelector(selectMix);
+  const dispatch = useAppDispatch();
   const handleMasterVolumeChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const { value } = event.target;
-    setMasterVolume(Number(value));
-    console.log(masterVolume);
+    dispatch(setMasterVolume(parseFloat(value)));
   };
+
+  useEffect(() => {
+    Tone.Destination.volume.value = Tone.dbToGain(0.1);
+  }, [masterVolume]);
 
   return (
     <div
