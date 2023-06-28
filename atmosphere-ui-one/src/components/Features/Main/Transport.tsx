@@ -1,5 +1,8 @@
 import { BsFillPlayFill, BsPauseFill } from 'react-icons/bs';
-import { selectTransport, togglePlay } from '../../../store/slices/transport';
+import {
+  selectTransport,
+  togglePlay,
+} from '../../../store/slices/transportSlice.ts';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import * as Tone from 'tone';
 

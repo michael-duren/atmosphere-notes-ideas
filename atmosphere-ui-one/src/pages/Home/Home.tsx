@@ -72,10 +72,6 @@ export default function Home() {
           </button>
         </div>
       </div>
-      {/*<form>*/}
-      {/*  <input type="text" placeholder="email" />*/}
-      {/*  <input type="text" placeholder="password" />*/}
-      {/*</form>*/}
     </HomeLayout>
   );
 }

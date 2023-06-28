@@ -9,7 +9,7 @@ import {
   setReverbDecay,
   setReverbMix,
   setReverbPreDelay,
-} from '../../../../store/slices/mix.ts';
+} from '../../../../store/slices/mixSlice.ts';
 
 const useMixChange = () => {
   const dispatch = useAppDispatch();

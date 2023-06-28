@@ -8,7 +8,7 @@ import {
 import VolumeCard from '../../Ui/Cards/VolumeCard';
 import useMixChange from './hooks/useMixChange.ts';
 import { useAppSelector } from '../../../store/hooks.ts';
-import { selectMix } from '../../../store/slices/mix.ts';
+import { selectMix } from '../../../store/slices/mixSlice.ts';
 import useMixEffects from './hooks/useMixEffects.ts';
 
 export default function Mix() {

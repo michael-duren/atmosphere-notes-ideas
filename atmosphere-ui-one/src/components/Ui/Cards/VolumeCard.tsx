@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import Slider from '../Slider';
 import { GiAbstract013 } from 'react-icons/gi';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { selectMix, setMasterVolume } from '../../../store/slices/mix';
+import { selectMix, setMasterVolume } from '../../../store/slices/mixSlice';
 
 export default function VolumeCard() {
   const { masterVolume } = useAppSelector(selectMix);

@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { Drum } from '../../../models/kit';
-import { toggleStep } from '../../../store/slices/pattern';
+import { toggleStep } from '../../../store/slices/patternSlice.ts';
 
 interface TrackProps {
   instrument: Drum;

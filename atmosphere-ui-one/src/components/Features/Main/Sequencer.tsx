@@ -1,8 +1,8 @@
 import { Fragment, useEffect, useRef } from 'react';
 import Track from '../../Ui/Track/Track';
 import { useAppSelector } from '../../../store/hooks';
-import { KitState } from '../../../store/slices/pattern';
-import { selectPattern } from '../../../store/slices/pattern';
+import { KitState } from '../../../store/slices/patternSlice.ts';
+import { selectPattern } from '../../../store/slices/patternSlice.ts';
 import * as Tone from 'tone';
 import { Drum } from '../../../models/kit';
 import Transport from './Transport';
@@ -14,7 +14,7 @@ import {
   reverb,
   volume,
 } from '../../../store/tone/mix';
-import { selectMix } from '../../../store/slices/mix';
+import { selectMix } from '../../../store/slices/mixSlice';
 
 interface SequencerProps {
   steps: number;

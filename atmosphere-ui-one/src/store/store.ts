@@ -1,8 +1,8 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import patternReducer from './slices/pattern';
-import transportReducer from './slices/transport';
+import patternReducer from './slices/patternSlice.ts';
+import transportReducer from './slices/transportSlice.ts';
 import logger from 'redux-logger';
-import mixReducer from './slices/mix';
+import mixReducer from './slices/mixSlice.ts';
 
 export const store = configureStore({
   reducer: {
