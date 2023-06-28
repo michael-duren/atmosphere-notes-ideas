@@ -1,4 +1,4 @@
-export default function Header() {
+export default function DawHeader() {
   return (
     <header className="flex items-center justify-between">
       <div className="flex items-center gap-4">

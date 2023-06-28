@@ -1,13 +1,15 @@
-import Aside from './components/Features/Aside/Aside';
-import Main from './components/Features/Main/Main';
-import Layout from './components/Layout/Layout';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Home from './pages/Home/Home.tsx';
+import Daw from './pages/Daw/Daw.tsx';
 
 function App() {
   return (
-    <Layout>
-      <Aside />
-      <Main />
-    </Layout>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/app" element={<Daw />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
