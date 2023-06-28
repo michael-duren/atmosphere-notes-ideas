@@ -1,6 +1,6 @@
 export default function Header() {
   return (
-    <header className="flex justify-between">
+    <header className="flex items-center justify-between">
       <div className="flex items-center gap-4">
         <div className="rounded-full text-white flex items-center justify-center font-caps shadow-2xl h-24 w-24 text-3xl bg-black">
           M

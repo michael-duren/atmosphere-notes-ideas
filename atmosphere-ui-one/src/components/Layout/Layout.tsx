@@ -1,4 +1,4 @@
-import Header from '../Features/Main/Header.tsx';
+import Header from './Header.tsx';
 
 interface LayoutProps {
   children?: React.ReactNode;
