@@ -128,7 +128,7 @@ export default function Mix() {
   };
 
   return (
-    <div className="p-8 min-w-[60vw] bg-dark-transparent items-end flex flex-col">
+    <div className="p-8 min-w-[50vw] w-full bg-dark-transparent items-end flex flex-col">
       <h2 className="uppercase flex gap-4 items-center font-caps text-2xl">
         MIX{' '}
         <span>

@@ -84,8 +84,8 @@ export default function Sequencer({ steps }: SequencerProps) {
   }, [steps]);
 
   return (
-    <div className="flex max-w-[60rem] min-w-[60vw] flex-col rounded-2xl p-8  bg-dark-transparent  gap-4 justify-center">
-      <div className="flex justify-between">
+    <div className="flex w-full items-center flex-col rounded-2xl p-8  bg-dark-transparent  gap-4 justify-center">
+      <div className="flex w-full justify-between">
         <Transport />
         <h2 className="font-caps flex gap-4 items-center text-2xl">
           SEQUENCER{' '}

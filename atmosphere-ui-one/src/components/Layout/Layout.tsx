@@ -1,7 +1,14 @@
+import Header from '../Features/Main/Header.tsx';
+
 interface LayoutProps {
   children?: React.ReactNode;
 }
 
 export default function Layout({ children }: LayoutProps) {
-  return <main className="grid grid-cols-9 p-6 text-white">{children}</main>;
+  return (
+    <div className="p-6">
+      <Header />
+      <main className="grid lg:grid-cols-12 gap-4 text-white">{children}</main>
+    </div>
+  );
 }

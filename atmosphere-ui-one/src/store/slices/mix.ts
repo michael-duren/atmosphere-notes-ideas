@@ -43,7 +43,6 @@ const mixSlice = createSlice({
     },
     setDistortionOutput: (state, action) => {
       state.distortion.output = action.payload;
-      // state.distortion.output.output.gain.value = action.payload;
     },
     setReverbMix: (state, action) => {
       state.reverb.mix = action.payload;
