@@ -15,7 +15,7 @@ export const musicStore = configureStore({
 
 export type MusicDispatch = typeof musicStore.dispatch;
 export type MusicState = ReturnType<typeof musicStore.getState>;
-export type AppThunk<ReturnType = void> = ThunkAction<
+export type MusicThunk<ReturnType = void> = ThunkAction<
   ReturnType,
   MusicState,
   unknown,
