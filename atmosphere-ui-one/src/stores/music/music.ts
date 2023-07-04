@@ -4,7 +4,7 @@ import transportReducer from './slices/transportSlice.ts';
 import logger from 'redux-logger';
 import mixReducer from './slices/mixSlice.ts';
 
-export const store = configureStore({
+export const musicStore = configureStore({
   reducer: {
     pattern: patternReducer,
     transport: transportReducer,
@@ -13,11 +13,11 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
 
-export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof store.getState>;
+export type MusicDispatch = typeof musicStore.dispatch;
+export type MusicState = ReturnType<typeof musicStore.getState>;
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
-  RootState,
+  MusicState,
   unknown,
   Action<string>
 >;

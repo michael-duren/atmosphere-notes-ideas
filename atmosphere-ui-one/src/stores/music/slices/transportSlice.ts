@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { RootState } from '../store';
+import { MusicState } from '../music';
 
 export interface TransportState {
   isPlaying: boolean;
@@ -28,7 +28,7 @@ const transportSlice = createSlice({
 
 export const { togglePlay, setBpm } = transportSlice.actions;
 
-export const selectTransport = (state: RootState): TransportState =>
+export const selectTransport = (state: MusicState): TransportState =>
   state.transport;
 
 export default transportSlice.reducer;

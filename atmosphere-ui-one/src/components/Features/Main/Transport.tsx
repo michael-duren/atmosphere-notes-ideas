@@ -3,14 +3,17 @@ import {
   selectTransport,
   setBpm,
   togglePlay,
-} from '../../../store/slices/transportSlice.ts';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+} from '../../../stores/music/slices/transportSlice.ts';
+import {
+  useMusicDispatch,
+  useMusicSelector,
+} from '../../../stores/music/hooks.ts';
 import * as Tone from 'tone';
 import { useEffect, useRef, useState } from 'react';
 
 export default function Transport() {
-  const { isPlaying, bpm } = useAppSelector(selectTransport);
-  const dispatch = useAppDispatch();
+  const { isPlaying, bpm } = useMusicSelector(selectTransport);
+  const dispatch = useMusicDispatch();
   const [inputBpm, setInputBpm] = useState(bpm);
   const inputBpmRef = useRef<HTMLInputElement>(null);
 

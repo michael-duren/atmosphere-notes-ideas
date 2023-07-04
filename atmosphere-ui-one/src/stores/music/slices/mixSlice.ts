@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { RootState } from '../store';
+import { MusicState } from '../music';
 
 export interface MixState {
   distortion: { mix: number; distortion: number; output: number };
@@ -65,7 +65,7 @@ const mixSlice = createSlice({
   },
 });
 
-export const selectMix = (state: RootState): MixState => state.mix;
+export const selectMix = (state: MusicState): MixState => state.mix;
 
 export const {
   setMasterVolume,

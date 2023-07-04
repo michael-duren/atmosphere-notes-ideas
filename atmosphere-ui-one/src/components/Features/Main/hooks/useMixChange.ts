@@ -1,4 +1,4 @@
-import { useAppDispatch } from '../../../../store/hooks.ts';
+import { useMusicDispatch } from '../../../../stores/music/hooks.ts';
 import {
   setDelayDelayTime,
   setDelayFeedback,
@@ -9,11 +9,11 @@ import {
   setReverbDecay,
   setReverbMix,
   setReverbPreDelay,
-} from '../../../../store/slices/mixSlice.ts';
+} from '../../../../stores/music/slices/mixSlice.ts';
 import { round } from '../../../../utils/round.ts';
 
 const useMixChange = () => {
-  const dispatch = useAppDispatch();
+  const dispatch = useMusicDispatch();
 
   // DISTORTION HANDLERS
   const handleDistortionMixChange = (num: number) => {

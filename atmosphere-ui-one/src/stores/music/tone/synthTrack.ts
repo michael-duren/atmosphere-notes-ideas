@@ -5,7 +5,7 @@ import { OmniOscillatorType } from 'tone/build/esm/source/oscillator/OscillatorI
 import { Chorus, Pattern } from 'tone';
 import { modulo } from './modulo.ts';
 import { NoteName } from 'tonal';
-import { random } from '../../utils/random.ts';
+import { random } from '../../../utils/random.ts';
 import { PatternName } from 'tone/build/esm/event/PatternGenerator';
 
 class SynthTrack {
@@ -41,7 +41,6 @@ class SynthTrack {
     this._pattern = new Tone.Pattern(
       (time: number, noteNumber: number) => {
         const note = this.mapNotes(noteNumber + this.transpose, this.notes);
-        console.log('PLAYING');
         this.synth.triggerAttackRelease(note, this.noteDuration, time);
       },
       this._sequence,

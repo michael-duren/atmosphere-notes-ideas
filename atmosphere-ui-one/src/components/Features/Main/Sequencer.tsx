@@ -1,8 +1,8 @@
 import { Fragment, useEffect, useRef } from 'react';
 import Track from '../../Ui/Track/Track';
-import { useAppSelector } from '../../../store/hooks';
-import { KitState } from '../../../store/slices/patternSlice.ts';
-import { selectPattern } from '../../../store/slices/patternSlice.ts';
+import { useMusicSelector } from '../../../stores/music/hooks.ts';
+import { KitState } from '../../../stores/music/slices/patternSlice.ts';
+import { selectPattern } from '../../../stores/music/slices/patternSlice.ts';
 import * as Tone from 'tone';
 import { Drum } from '../../../models/kit';
 import Transport from './Transport';
@@ -13,8 +13,8 @@ import {
   distortionGain,
   reverb,
   volume,
-} from '../../../store/tone/mix';
-import { selectMix } from '../../../store/slices/mixSlice';
+} from '../../../stores/music/tone/mix.ts';
+import { selectMix } from '../../../stores/music/slices/mixSlice.ts';
 
 interface SequencerProps {
   steps: number;
@@ -24,8 +24,8 @@ const NOTE = 'C2' as const;
 
 export default function Sequencer({ steps }: SequencerProps) {
   // REDUX STATE SELECTORS
-  const { masterVolume } = useAppSelector(selectMix);
-  const pattern = useAppSelector(selectPattern);
+  const { masterVolume } = useMusicSelector(selectMix);
+  const pattern = useMusicSelector(selectPattern);
   const patternArr = Object.keys(pattern).map(
     (track) => pattern[track as keyof KitState]
   );

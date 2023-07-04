@@ -1,6 +1,6 @@
 import Spinner from '../../Ui/Spinners/Spinner.tsx';
 import * as Tone from 'tone';
-import { fmSynthOne } from '../../../store/tone/fmSynth.ts';
+import { fmSynthOne } from '../../../stores/music/tone/fmSynth.ts';
 import { useEffect, useState } from 'react';
 import AnimatedKnob from '../../Ui/Knobs/AnimatedKnob.tsx';
 

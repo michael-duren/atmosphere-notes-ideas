@@ -35,7 +35,7 @@ export default function EffectCardKnob({
         {state.map((param) => {
           const title = toTitleCase(splitCamelCase(param.name));
           return (
-            <div className="items-center gap-2">
+            <div key={param.name} className="items-center gap-2">
               <AnimatedKnob
                 level={param.level}
                 setter={param.setter}

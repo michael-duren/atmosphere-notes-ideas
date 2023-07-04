@@ -6,13 +6,13 @@ import {
 } from 'react-icons/gi';
 import VolumeCard from '../../Ui/Cards/VolumeCard';
 import useMixChange from './hooks/useMixChange.ts';
-import { useAppSelector } from '../../../store/hooks.ts';
-import { selectMix } from '../../../store/slices/mixSlice.ts';
+import { useMusicSelector } from '../../../stores/music/hooks.ts';
+import { selectMix } from '../../../stores/music/slices/mixSlice.ts';
 import useMixEffects from './hooks/useMixEffects.ts';
 import EffectCardKnob from '../../Ui/Cards/EffectCardKnob.tsx';
 
 export default function Mix() {
-  const mix = useAppSelector(selectMix);
+  const mix = useMusicSelector(selectMix);
   const distortionStore = mix.distortion;
   const reverbStore = mix.reverb;
   const delayStore = mix.delay;

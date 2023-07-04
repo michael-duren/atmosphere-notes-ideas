@@ -2,12 +2,18 @@ import * as Tone from 'tone';
 import { useEffect } from 'react';
 import Slider from '../Sliders/Slider.tsx';
 import { GiAbstract013 } from 'react-icons/gi';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { selectMix, setMasterVolume } from '../../../store/slices/mixSlice';
+import {
+  useMusicDispatch,
+  useMusicSelector,
+} from '../../../stores/music/hooks.ts';
+import {
+  selectMix,
+  setMasterVolume,
+} from '../../../stores/music/slices/mixSlice.ts';
 
 export default function VolumeCard() {
-  const { masterVolume } = useAppSelector(selectMix);
-  const dispatch = useAppDispatch();
+  const { masterVolume } = useMusicSelector(selectMix);
+  const dispatch = useMusicDispatch();
   const handleMasterVolumeChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
