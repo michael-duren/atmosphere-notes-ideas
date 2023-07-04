@@ -5,7 +5,7 @@ import {
   distortionGain,
   reverb,
 } from '../../../../store/tone/mix.ts';
-import { MixState } from '../../../../store/slices/mix.ts';
+import { MixState } from '../../../../store/slices/mixSlice.ts';
 
 const useMixEffects = (mix: MixState) => {
   const distortionStore = mix.distortion;

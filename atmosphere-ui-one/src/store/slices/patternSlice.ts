@@ -23,25 +23,25 @@ export interface KitState {
 const patternInitialState: KitState = {
   // 16 boolean steps in an array
   CH: {
-    steps: Array.from({ length: 16 }).map((val) => (val = false)),
+    steps: new Array(16).fill(false),
     name: 'CH',
     sound: '/sounds/closed-hat.wav',
     id: 0,
   },
   CL: {
-    steps: Array.from({ length: 16 }).map((val) => (val = false)),
+    steps: new Array(16).fill(false),
     name: 'CL',
     sound: '/sounds/clap.wav',
     id: 1,
   },
   SD: {
-    steps: Array.from({ length: 16 }).map((val) => (val = false)),
+    steps: new Array(16).fill(false),
     name: 'SD',
     sound: '/sounds/snare.wav',
     id: 2,
   },
   BD: {
-    steps: Array.from({ length: 16 }).map((val) => (val = false)),
+    steps: new Array(16).fill(false),
     name: 'BD',
     id: 3,
     sound: '/sounds/vocal-kick.wav',

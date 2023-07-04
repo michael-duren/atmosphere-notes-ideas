@@ -1,11 +1,11 @@
 import * as Tone from 'tone';
 
 export interface Drum {
+  id: number;
   name: string;
   sound: string;
   steps: boolean[];
   sampler?: Tone.Sampler;
-  id: number;
 }
 
 // export const kit: Drum[] = [

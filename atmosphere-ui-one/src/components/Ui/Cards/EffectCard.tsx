@@ -1,6 +1,6 @@
 import { splitCamelCase } from '../../../utils/splitCamelCase';
 import { toTitleCase } from '../../../utils/toTitleCase';
-import Slider from '../Slider';
+import Slider from '../Sliders/Slider';
 
 interface Parameter {
   level: number;

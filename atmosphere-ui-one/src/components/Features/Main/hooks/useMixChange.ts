@@ -10,68 +10,44 @@ import {
   setReverbMix,
   setReverbPreDelay,
 } from '../../../../store/slices/mixSlice.ts';
+import { round } from '../../../../utils/round.ts';
 
 const useMixChange = () => {
   const dispatch = useAppDispatch();
 
   // DISTORTION HANDLERS
-  const handleDistortionMixChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const { value } = event.target;
-    dispatch(setDistortionMix(parseFloat(value)));
+  const handleDistortionMixChange = (num: number) => {
+    dispatch(setDistortionMix(round(num)));
   };
 
-  const handleDistortionAmountChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const { value } = event.target;
-    dispatch(setDistortionDistortion(parseFloat(value)));
+  const handleDistortionAmountChange = (num: number) => {
+    dispatch(setDistortionDistortion(round(num)));
   };
 
-  const handleDistortionOutputChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const { value } = event.target;
-    dispatch(setDistortionOutput(parseFloat(value)));
+  const handleDistortionOutputChange = (num: number) => {
+    dispatch(setDistortionOutput(round(num)));
   };
 
   // REVERB HANDLERS
-  const handleReverbMixChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const { value } = event.target;
-    dispatch(setReverbMix(parseFloat(value)));
+  const handleReverbMixChange = (num: number) => {
+    dispatch(setReverbMix(round(num)));
   };
-  const handleReverbDecayChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const { value } = event.target;
-    dispatch(setReverbDecay(parseFloat(value)));
+  const handleReverbDecayChange = (num: number) => {
+    dispatch(setReverbDecay(round(num)));
   };
-  const handleReverbPreDelayChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const { value } = event.target;
-    dispatch(setReverbPreDelay(parseFloat(value)));
+  const handleReverbPreDelayChange = (num: number) => {
+    dispatch(setReverbPreDelay(round(num)));
   };
 
   // DELAY HANDLERS
-  const handleDelayMixChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-    dispatch(setDelayMix(parseFloat(value)));
+  const handleDelayMixChange = (num: number) => {
+    dispatch(setDelayMix(round(num)));
   };
-  const handleDelayDelayTimeChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const { value } = event.target;
-    dispatch(setDelayDelayTime(parseFloat(value)));
+  const handleDelayDelayTimeChange = (num: number) => {
+    dispatch(setDelayDelayTime(round(num)));
   };
-  const handleDelayFeedbackChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const { value } = event.target;
-    dispatch(setDelayFeedback(parseFloat(value)));
+  const handleDelayFeedbackChange = (num: number) => {
+    dispatch(setDelayFeedback(round(num)));
   };
 
   return {

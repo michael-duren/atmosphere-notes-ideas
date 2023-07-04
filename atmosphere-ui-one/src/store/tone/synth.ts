@@ -1,19 +1,25 @@
 import * as Tone from 'tone';
 import { delay, distortion, distortionGain, reverb, volume } from './mix.ts';
+import { OmniOscillatorType } from 'tone/build/esm/source/oscillator/OscillatorInterface';
 
-export let fmSynthOne = new Tone.FMOscillator().chain(
-  distortion,
-  distortionGain,
-  reverb,
-  delay,
-  volume,
-  Tone.Destination
-);
-export const fmSynthTwo = new Tone.FMSynth().chain(
-  distortion,
-  distortionGain,
-  reverb,
-  delay,
-  volume,
-  Tone.Destination
-);
+class Synth {
+  private synth: Tone.Synth<Tone.SynthOptions>;
+  constructor(oscillatorType: OmniOscillatorType = 'fatsawtooth') {
+    //   initialize synth
+    this.synth = new Tone.Synth();
+    this.synth.oscillator.type = oscillatorType;
+
+    this.synth.chain(
+      distortion,
+      distortionGain,
+      reverb,
+      delay,
+      volume,
+      Tone.Destination
+    );
+  }
+
+  //
+}
+
+export default Synth;

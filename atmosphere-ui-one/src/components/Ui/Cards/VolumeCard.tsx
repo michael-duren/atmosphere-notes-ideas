@@ -1,6 +1,6 @@
 import * as Tone from 'tone';
 import { useEffect } from 'react';
-import Slider from '../Slider';
+import Slider from '../Sliders/Slider.tsx';
 import { GiAbstract013 } from 'react-icons/gi';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { selectMix, setMasterVolume } from '../../../store/slices/mixSlice';
@@ -21,17 +21,24 @@ export default function VolumeCard() {
 
   return (
     <div
-      className="h-56 w-20 bg-gray-transparent bg p-6 gap-16 justify-start  flex flex-col
+      className="h-[22rem]   w-20 bg-gray-transparent  p-6 gap-16 justify-start  flex flex-col
      items-center rounded-xl "
     >
-      <GiAbstract013 size={25} />
-      <Slider
-        name="masterVolume"
-        onChange={handleMasterVolumeChange}
-        value={masterVolume}
-        color="accent-white"
-        additionalClasses="rotate-270 mt-6 w-32 opacity-60"
-      />
+      <div className="mb-12">
+        <GiAbstract013 size={25} />
+      </div>
+      <div className="relative">
+        <Slider
+          name="masterVolume"
+          onChange={handleMasterVolumeChange}
+          value={masterVolume}
+          color="accent-white"
+          additionalClasses="rotate-270 mt-6 w-32 opacity-60"
+        />
+        {/*<div className="absolute -bottom-[210%] right-[50%] transform translate-x-1/2">*/}
+        {/*  {masterVolume}*/}
+        {/*</div>*/}
+      </div>
     </div>
   );
 }

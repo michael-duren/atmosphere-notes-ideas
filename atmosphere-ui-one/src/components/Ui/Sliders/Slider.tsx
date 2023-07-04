@@ -1,3 +1,5 @@
+import './Slider.css';
+
 interface KnobProps {
   value: number;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -27,7 +29,8 @@ const Slider = ({
       max={1}
       value={value}
       onChange={onChange}
-      className={`w-20 h-0.5 ${color} bg-gray-300 ${additionalClasses} bg-opacity-30 appearance-none cursor-pointer rounded-lg`}
+      className={`h-10 ${color}   rounded-full focus:outline-none bg-white bg-opacity-30 border-2 
+      border-slate-600 ${additionalClasses}  appearance-none cursor-pointer rounded-lg`}
     />
   );
 };

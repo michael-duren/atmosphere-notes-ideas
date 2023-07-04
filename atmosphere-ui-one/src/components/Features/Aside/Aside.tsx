@@ -7,7 +7,7 @@ export default function Aside() {
       <div className="flex p-8 bg-dark-transparent rounded-xl flex-col gap-4">
         <Collections />
       </div>
-      <div className="flex p-8 bg-dark-transparent rounded-xl  gap-4">
+      <div className="flex items-center justify-around p-8 bg-dark-transparent rounded-xl  gap-4">
         <Synth />
       </div>
     </aside>
