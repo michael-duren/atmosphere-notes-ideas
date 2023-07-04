@@ -35,7 +35,7 @@ export default function Sequencer({ steps }: SequencerProps) {
   const lampRef = useRef<HTMLInputElement[]>([]);
   const seqRef = useRef<Tone.Sequence | null>(null);
   const stepsRef = useRef<HTMLInputElement[][]>([]);
-  const stepsIds = Array.from({ length: 16 }).map((_, i) => i);
+  const stepsIds = Array.from({ length: steps }).map((_, i) => i);
 
   // EVENTS
   useEffect(() => {

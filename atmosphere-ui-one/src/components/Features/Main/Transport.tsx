@@ -1,27 +1,46 @@
 import { BsFillPlayFill, BsPauseFill } from 'react-icons/bs';
 import {
   selectTransport,
+  setBpm,
   togglePlay,
 } from '../../../store/slices/transportSlice.ts';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import * as Tone from 'tone';
+import { useEffect, useRef, useState } from 'react';
 
 export default function Transport() {
-  const { isPlaying } = useAppSelector(selectTransport);
+  const { isPlaying, bpm } = useAppSelector(selectTransport);
   const dispatch = useAppDispatch();
-  const setIsPlaying = (state: boolean) => {
-    dispatch(togglePlay(state));
+  const [inputBpm, setInputBpm] = useState(bpm);
+  const inputBpmRef = useRef<HTMLInputElement>(null);
+
+  const handleInputBpm = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputBpm(+event.target.value);
+  };
+  const setIsPlaying = () => {
+    dispatch(togglePlay());
   };
 
   const handleTransport = async () => {
     console.log('handleTransport');
     if (Tone.Transport.state === 'started') {
       Tone.Transport.stop();
-      setIsPlaying(false);
+      setIsPlaying();
     } else {
       await Tone.start();
       Tone.Transport.start();
-      setIsPlaying(true);
+      setIsPlaying();
+    }
+  };
+
+  useEffect(() => {
+    Tone.Transport.bpm.value = bpm;
+  }, [bpm]);
+
+  const handleBpm = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter' && inputBpm > 20 && inputBpm <= 400) {
+      dispatch(setBpm(inputBpm));
+      inputBpmRef.current!.blur();
     }
   };
 
@@ -33,11 +52,14 @@ export default function Transport() {
       <div className="flex flex-col">
         <label className="text-[0.5rem]">BPM</label>
         <input
+          ref={inputBpmRef}
           type="number"
           max={400}
           min={20}
-          value={120}
-          className="text-white text-2xl bg-gray-transparent rounded-2xl"
+          value={inputBpm}
+          onChange={handleInputBpm}
+          onKeyDown={handleBpm}
+          className="text-white p-2 text-2xl bg-gray-transparent rounded-2xl"
         />
       </div>
       <div className="flex flex-col">
