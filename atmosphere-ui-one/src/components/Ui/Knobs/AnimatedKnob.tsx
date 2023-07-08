@@ -1,4 +1,4 @@
-import { animated, Spring } from '@react-spring/web';
+import { animated, Spring, SpringValue } from '@react-spring/web';
 import {
   CircularInput,
   CircularProgress,
@@ -11,15 +11,28 @@ interface Props {
   title: string;
   level: number;
   setter: (num: number) => void;
+  titleSize?: string;
+  display?: string;
+  displaySize?: string;
 }
 
 const AnimatedCircleInput = animated(CircularInput);
 
-export default function AnimatedKnob({ color, title, level, setter }: Props) {
+export default function AnimatedKnob({
+  color,
+  title,
+  level,
+  setter,
+  titleSize,
+  display,
+  displaySize,
+}: Props) {
+  const titleTextSize = titleSize ?? '';
+
   return (
     <div>
       <Spring to={{ level }}>
-        {(props) => (
+        {(props: { level: SpringValue<number> }) => (
           <AnimatedCircleInput
             radius={30}
             value={props.level}
@@ -35,16 +48,32 @@ export default function AnimatedKnob({ color, title, level, setter }: Props) {
               className="stroke-white"
               r={10}
             />
-            <text x={30} y={35} textAnchor={'middle'} className="fill-white">
-              {Math.round(level * 100)}
-            </text>
+            {display ? (
+              <text
+                className={` fill-white ${displaySize}`}
+                x={30}
+                y={35}
+                textAnchor={'middle'}
+              >
+                {display}
+              </text>
+            ) : (
+              <text
+                className={` fill-white ${displaySize}`}
+                x={30}
+                y={35}
+                textAnchor={'middle'}
+              >
+                {Math.round(level * 100)}
+              </text>
+            )}
             <text
-              className="stroke-white "
+              className={`stroke-white ${titleTextSize} `}
               textAnchor={'middle'}
               fontFamily={'Rajdhani, sans-serif'}
-              dy={'0.4rem'}
+              dy={'0.1rem'}
               fontWeight={'semiBold'}
-              x={-10}
+              x={30}
               y={-15}
             >
               {title}
