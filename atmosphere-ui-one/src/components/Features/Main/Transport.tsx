@@ -53,7 +53,7 @@ export default function Transport() {
         {isPlaying ? <BsPauseFill size={40} /> : <BsFillPlayFill size={40} />}
       </button>
       <div className="flex flex-col">
-        <label className="text-[0.5rem]">BPM</label>
+        <label className="text-[0.6rem]">BPM</label>
         <input
           ref={inputBpmRef}
           type="number"
@@ -66,13 +66,13 @@ export default function Transport() {
         />
       </div>
       <div className="flex flex-col">
-        <label className="text-[0.5rem]">STEPS</label>
+        <label className="text-[0.6rem]">STEPS</label>
         <input
           type="number"
           max={64}
           min={1}
           value={16}
-          className="text-white text-2xl bg-gray-transparent rounded-2xl"
+          className="text-white p-2 text-2xl bg-gray-transparent rounded-2xl"
         />
       </div>
     </div>
