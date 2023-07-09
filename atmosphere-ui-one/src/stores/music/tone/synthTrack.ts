@@ -20,8 +20,9 @@ class SynthTrack {
   private _chorus: Chorus;
   private _filter: Filter;
   private _filterTwo: Filter;
-  private _lfo: LFO;
-  private _lfoGain: Gain<'gain'>;
+  private _lfoFilter: LFO;
+  private _lfoMetal: LFO;
+  private _lfoGainMetal: Gain<'gain'>;
 
   // constructor
   constructor(
@@ -46,17 +47,25 @@ class SynthTrack {
     });
 
     // synth effects
+    // filters
     this._filter = new Tone.Filter(100, 'lowpass');
     this._filterTwo = new Tone.Filter(100, 'lowpass');
     this._filter.rolloff = -48;
     this._filter.Q.value = 1;
+    // chorus
     this._chorus = new Tone.Chorus(500, 0.01, 1);
-    this._lfo = new Tone.LFO('8n', 400, 20000);
-    this._lfoGain = new Tone.Gain(0.5);
-    this._lfo.connect(this._lfoGain);
-    this._lfo.type = 'sine2';
-    this._lfoGain.connect(this._chorus.frequency);
-    this._lfoGain.connect(this._filterTwo.frequency);
+    // LFO One
+    this._lfoFilter = new Tone.LFO('8n', 400, 20000);
+    // this._lfoFilterGain = new Tone.Gain(0.5);
+    this._lfoFilter.connect(this.filterTwo.frequency);
+    // this._lfoFilterGain.connect(this._filterTwo.frequency);
+    // LFO TWo
+    this._lfoMetal = new Tone.LFO('8n', 400, 20000);
+    this._lfoGainMetal = new Tone.Gain(0.5);
+    this._lfoMetal.connect(this._lfoGainMetal);
+    this._lfoGainMetal.connect(this._synth.modulationIndex);
+
+    // connect
     this._synth.chain(this._chorus, this._filter, this._filterTwo);
 
     // initalize sequence
@@ -144,12 +153,19 @@ class SynthTrack {
   set filterTwo(value: Filter) {
     this._filterTwo = value;
   }
-  get lfo(): LFO {
-    return this._lfo;
+  get lfoFilter(): LFO {
+    return this._lfoFilter;
   }
 
-  set lfo(value: LFO) {
-    this._lfo = value;
+  set lfoFilter(value: LFO) {
+    this._lfoFilter = value;
+  }
+  get lfoMetal(): LFO {
+    return this._lfoMetal;
+  }
+
+  set lfoMetal(value: LFO) {
+    this._lfoMetal = value;
   }
   get filter(): Filter {
     return this._filter;
@@ -157,6 +173,13 @@ class SynthTrack {
 
   set filter(value: Filter) {
     this._filter = value;
+  }
+  get lfoGainMetal(): Gain<'gain'> {
+    return this._lfoGainMetal;
+  }
+
+  set lfoGainMetal(value: Gain<'gain'>) {
+    this._lfoGainMetal = value;
   }
 }
 

@@ -13,9 +13,10 @@ import { useEffect, useState } from 'react';
 interface Props {
   wave: 'sin' | 'triangle' | 'square' | 'sawtooth';
   setWave: (wave: 'sin' | 'triangle' | 'square' | 'sawtooth') => void;
+  title: string;
 }
 
-export default function WaveFormKnob({ wave, setWave }: Props) {
+export default function WaveFormKnob({ wave, setWave, title }: Props) {
   const [value, setValue] = useState(0);
   const stepValue = (val: number) => Math.round(val * 4) / 4;
   const color = '#9333EA';
@@ -76,7 +77,7 @@ export default function WaveFormKnob({ wave, setWave }: Props) {
           x={30}
           y={-15}
         >
-          Waveform
+          {title}
         </text>
       </CircularInput>
     </div>

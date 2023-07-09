@@ -3,6 +3,8 @@ import { synthOne } from '../../../stores/music/tone/mix.ts';
 import AnimatedKnob from '../Knobs/AnimatedKnob.tsx';
 import WaveFormKnob from '../Knobs/WaveFormKnob.tsx';
 import { formatFrequency, toFrequency } from '../../../utils/toFrequency.ts';
+import NoteFrequencyKnob from '../Knobs/NoteFrequencyKnob.tsx';
+import { note } from '../../../utils/getNoteTime.ts';
 
 export default function SynthCard() {
   const [modulation, setModulation] = useState(0);
@@ -15,7 +17,14 @@ export default function SynthCard() {
   const [release, setRelease] = useState(0.2);
   const [filterFreq, setFilterFreq] = useState(1);
   const [chorus, setChorus] = useState(0);
+  const [filterLfo, setFilterLfo] = useState(1);
+  const [metalLfo, setMetalLfo] = useState(1);
+  const [lfoSpeed, setLfoSpeed] = useState<typeof note>('8n');
+  const [lfoWave, setLfoWave] = useState<
+    'sin' | 'triangle' | 'square' | 'sawtooth'
+  >('sin');
 
+  // envelopes
   useEffect(() => {
     synthOne.synth.envelope.attack = +attack.toFixed(2);
     console.log(+(attack / 2).toFixed(2));
@@ -30,10 +39,12 @@ export default function SynthCard() {
     synthOne.synth.envelope.sustain = +(release / 2).toFixed(2);
   }, [release]);
 
+  // metal
   useEffect(() => {
-    synthOne.synth.modulationIndex.value = modulation * 100;
+    synthOne.synth.modulationIndex.value = modulation * 8;
   }, [modulation]);
 
+  // wave form
   useEffect(() => {
     switch (wave) {
       case 'sin':
@@ -53,58 +64,74 @@ export default function SynthCard() {
     }
   }, [wave]);
 
+  // filter freq
   useEffect(() => {
     synthOne.filter.frequency.value = toFrequency(filterFreq);
-    console.log(synthOne.chorus);
-    console.log(synthOne.filter);
   }, [filterFreq]);
 
+  // chorus
   useEffect(() => {
     synthOne.chorus.feedback.value = chorus;
     synthOne.chorus.frequency.value = chorus < 0.5 ? chorus : chorus * 0.01;
-
-    console.log(chorus * 0.1);
   }, [chorus]);
+
+  // filter lfo amount
+  useEffect(() => {
+    synthOne.lfoFilter.min = toFrequency(filterLfo);
+  }, [filterLfo]);
+  // metal lfo amount
+  useEffect(() => {
+    synthOne.lfoMetal.min = metalLfo;
+  }, [metalLfo]);
+  // lfo speeds
+  useEffect(() => {
+    synthOne.lfoFilter.frequency.value = lfoSpeed;
+    synthOne.lfoMetal.frequency.value = lfoSpeed;
+  }, [lfoSpeed]);
+  // lfo waveform
+  useEffect(() => {
+    switch (wave) {
+      case 'sin':
+        synthOne.lfoFilter.type = 'sine2';
+        synthOne.lfoMetal.type = 'sine2';
+        return;
+      case 'triangle':
+        synthOne.lfoFilter.type = 'triangle2';
+        synthOne.lfoMetal.type = 'triangle2';
+        return;
+      case 'sawtooth':
+        synthOne.lfoFilter.type = 'sawtooth2';
+        synthOne.lfoMetal.type = 'sawtooth2';
+        return;
+      case 'square':
+        synthOne.lfoFilter.type = 'square2';
+        synthOne.lfoMetal.type = 'square2';
+        return;
+      default:
+        synthOne.lfoMetal.type = 'sine';
+    }
+  }, [lfoWave]);
 
   return (
     <div className="bg-gray-transparent flex items-center rounded-2xl justify-center  p-10">
-      <div className="grid grid-cols-2 gap-x-16 gap-y-8">
+      <div className="grid grid-cols-3 grid-rows-4 gap-x-8 gap-y-12">
+        {/* Row One */}
+        <WaveFormKnob wave={wave} setWave={setWave} title="Waveform" />
         <AnimatedKnob
           color={'#7C3AED'}
-          title={'Modulation'}
-          level={modulation}
-          setter={(num: number) => setModulation(num)}
+          title={'Chorus'}
+          level={chorus}
+          setter={(num: number) => setChorus(num)}
           titleSize="text-sm"
         />
-        <WaveFormKnob wave={wave} setWave={setWave} />
         <AnimatedKnob
-          color={'#7C3AED'}
+          color={'#4F46E5'}
           title={'Attack'}
           level={attack}
           setter={(num: number) => setAttack(num)}
           titleSize="text-sm"
         />
-        <AnimatedKnob
-          color={'#7C3AED'}
-          title={'Decay'}
-          level={decay}
-          setter={(num: number) => setDecay(num)}
-          titleSize="text-sm"
-        />
-        <AnimatedKnob
-          color={'#7C3AED'}
-          title={'Sustain'}
-          level={sustain}
-          setter={(num: number) => setSustain(num)}
-          titleSize="text-sm"
-        />
-        <AnimatedKnob
-          color={'#7C3AED'}
-          title={'Release'}
-          level={release}
-          setter={(num: number) => setRelease(num)}
-          titleSize="text-sm"
-        />
+        {/* Row 2 */}
         <AnimatedKnob
           color={'#7C3AED'}
           title={'Filter'}
@@ -116,9 +143,52 @@ export default function SynthCard() {
         />
         <AnimatedKnob
           color={'#7C3AED'}
-          title={'Chorus'}
-          level={chorus}
-          setter={(num: number) => setChorus(num)}
+          title={'Filter Mod'}
+          level={filterLfo}
+          setter={(num: number) => setFilterLfo(num)}
+          titleSize="text-sm"
+        />
+        <AnimatedKnob
+          color={'#4F46E5'}
+          title={'Decay'}
+          level={decay}
+          setter={(num: number) => setDecay(num)}
+          titleSize="text-sm"
+        />
+        {/* Row 3 */}
+        <AnimatedKnob
+          color={'#7C3AED'}
+          title={'Metal'}
+          level={modulation}
+          setter={(num: number) => setModulation(num)}
+          titleSize="text-sm"
+        />
+        <AnimatedKnob
+          color={'#7C3AED'}
+          title={'Metal Mod'}
+          level={metalLfo}
+          setter={(num: number) => setMetalLfo(num)}
+          titleSize="text-sm"
+        />
+        <AnimatedKnob
+          color={'#4F46E5'}
+          title={'Sustain'}
+          level={sustain}
+          setter={(num: number) => setSustain(num)}
+          titleSize="text-sm"
+        />
+        {/* Row 4 */}
+        <NoteFrequencyKnob
+          note={lfoSpeed}
+          setNote={setLfoSpeed}
+          title={'LFO Freq'}
+        />
+        <WaveFormKnob wave={lfoWave} setWave={setLfoWave} title="LFO Shape" />
+        <AnimatedKnob
+          color={'#4F46E5'}
+          title={'Release'}
+          level={release}
+          setter={(num: number) => setRelease(num)}
           titleSize="text-sm"
         />
       </div>
