@@ -12,6 +12,6 @@ const volume = new Tone.Volume(Tone.dbToGain(1));
 const synthOne = new SynthTrack();
 synthOne.patternType = 'alternateUp';
 synthOne.pattern.start();
-synthOne.lfo.start();
+synthOne.lfoFilter.start();
 
 export { distortion, distortionGain, reverb, delay, volume, synthOne };
